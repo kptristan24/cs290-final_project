@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Create Profile</title>
+    <title>View Collection!</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../../libraries/bootstrap-3.3.4-dist/css/bootstrap.min.css" rel="stylesheet">
@@ -64,8 +64,8 @@
 				}else{
 					echo '<li><a href="reddit.com">'. $_SESSION['username'] .'</a></li>';
 				}
-				
 			?>
+				<li><a href="logout.php">Logout</a></li>
 				</ul>
             </div>
           </div>
@@ -81,63 +81,59 @@
         <div class="cover-container">
 
           <div class="inner cover">
-            <h1 class="cover-heading">Create a new Profile!</h1>
-            <p class="lead">It seems you haven't made a profile yet! Fill out the form below to make a new user.</p>
+            <h1 class="cover-heading">Add a new card!</h1>
+            <p class="lead">Fill out the form below to add a new card to YOUR collection</p>
+			<p class="lead">Note! This will only add the card to your collection, it will not be available to others</p>
             <p class="lead">
 			<script type="text/javascript" src="../../../libraries/jquery-2.1.4.min.js"></script>
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-              <form method="POST" action="createprofile.php">
+              <form method="POST" action="addcard.php">
 				<div class="input-group">
-					<span class="input-group-addon" id="basic-addon1">User Name</span>
-					<script type="text/javascript" src="../js/check_user.js"></script>
-					<input type="text" onChange="doShit();" id="username "name="username" class="form-control" placeholder="Username" aria-describedby="basic-addon1"><br>
-					<div id="status"></div>
+					<span class="input-group-addon" id="basic-addon1">Card Name</span>
+					<input type="text" name="card_name" class="form-control" placeholder="Fireball, Armorsmith...." aria-describedby="basic-addon1"><br>
 				</div>
 				<br><br>
 				<div class="input-group">
-					<span class="input-group-addon" id="basic-addon1">Password</span>
-					<input type="password" name="password" class="form-control" placeholder="*******" aria-describedby="basic-addon1">
+					<span class="input-group-addon" id="basic-addon1">Class</span>
+					<input type="text" name="class" class="form-control" placeholder="Mage, Warrior, Hunter..." aria-describedby="basic-addon1"><br>
 				</div>
-				<br>
+				<br><br>
+				<div class="input-group">
+					<span class="input-group-addon" id="basic-addon1">Card Image</span>
+					<input type="text" id="username "name="image" class="form-control" placeholder="Username" aria-describedby="basic-addon1"><br>
+				</div>
+				<br><br>
 				<button type="submit" class="btn btn-default">Submit</button>
 			</form>
 			</p>
           </div>
 		  
-		  <?php
-			if(isset($_POST['username'])){
-				echo $_POST['username'];
-				
-				$username = $_POST['username'];
-				$password = $_POST['password'];
-				
-				//Double check if names in DB
-				$result = $conn->query("SELECT username FROM user WHERE username='". $username ."'; ");
-				$matchingnames = 0;
-				foreach($result as $matchingnames){
-					$matchingnames++;
-				}
-				if($matchingnames == 0){
-					$conn->query("INSERT INTO user (username, password) VALUES ('". $username ."', '". $password ."'); ");
-					$_SESSION['username'] = $username;
-				}
-				echo $_SESSION['username'];
-				
-			}
-		  ?>
-		  
-		  
-
-          <div class="mastfoot">
+		    <div class="mastfoot">
             <div class="inner">
               <p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+			  
             </div>
           </div>
-
         </div>
-
+		<?php
+			if(isset($_POST['card_name'])){
+				$name = $_POST['card_name'];
+				$class = $_POST['class'];
+				$image = $_POST['image'];
+				
+				$sql = "SELECT * FROM user WHERE username='". $_SESSION['username'] ."';";
+				$result = $conn->query($sql);
+				while($row = mysqli_fetch_array($result)) {
+					$uid = $row['id'];	
+				}
+				
+				$sql = "INSERT INTO Cards (uid, name, class, card_image) VALUES ('". $uid ."', '". $name ."', '". $class ."', '". $image ."')";
+				$conn->query($sql);
+				
+				echo 'Successfully Added teh card!';
+			}
+		?>
       </div>
-
     </div>
 
     <!-- Bootstrap core JavaScript

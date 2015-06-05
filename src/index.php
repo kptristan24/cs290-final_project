@@ -62,8 +62,9 @@
 			<?php
 				if(!isset($_SESSION['username'])){
 					echo '<li><a href="createprofile.php">Create Profile</a></li>';
+					echo '<li><a href="login.php">Login</a></li>';
 				}else{
-					echo '<li><a href="createprofile.php">'. $_SESSION['username'] .'</a></li>';
+					echo '<li><a href="createprofile.php">'. $_SESSION['username'] .'</a></li>';		
 				}
 				
 			?>

@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Create Profile</title>
+    <title>View Collection!</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../../libraries/bootstrap-3.3.4-dist/css/bootstrap.min.css" rel="stylesheet">
@@ -51,8 +51,8 @@
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">My Collection <span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Add</a></li>
-                    <li><a href="viewcollection.php">View</a></li>
+                    <li><a href="addcard.php">Add</a></li>
+                    <li><a href="#">View</a></li>
                     <li><a href="#">Something else here</a></li>
                   </ul>
                 </li>
@@ -64,8 +64,8 @@
 				}else{
 					echo '<li><a href="reddit.com">'. $_SESSION['username'] .'</a></li>';
 				}
-				
 			?>
+				<li><a href="logout.php">Logout</a></li>
 				</ul>
             </div>
           </div>
@@ -81,63 +81,55 @@
         <div class="cover-container">
 
           <div class="inner cover">
-            <h1 class="cover-heading">Create a new Profile!</h1>
-            <p class="lead">It seems you haven't made a profile yet! Fill out the form below to make a new user.</p>
-            <p class="lead">
-			<script type="text/javascript" src="../../../libraries/jquery-2.1.4.min.js"></script>
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-              <form method="POST" action="createprofile.php">
-				<div class="input-group">
-					<span class="input-group-addon" id="basic-addon1">User Name</span>
-					<script type="text/javascript" src="../js/check_user.js"></script>
-					<input type="text" onChange="doShit();" id="username "name="username" class="form-control" placeholder="Username" aria-describedby="basic-addon1"><br>
-					<div id="status"></div>
-				</div>
-				<br><br>
-				<div class="input-group">
-					<span class="input-group-addon" id="basic-addon1">Password</span>
-					<input type="password" name="password" class="form-control" placeholder="*******" aria-describedby="basic-addon1">
-				</div>
-				<br>
-				<button type="submit" class="btn btn-default">Submit</button>
-			</form>
-			</p>
-          </div>
+            <h1 class="cover-heading">Your collection</h1>
+            <p class="lead">This is a list of the cards you've added. Neato!</p>
 		  
-		  <?php
-			if(isset($_POST['username'])){
-				echo $_POST['username'];
-				
-				$username = $_POST['username'];
-				$password = $_POST['password'];
-				
-				//Double check if names in DB
-				$result = $conn->query("SELECT username FROM user WHERE username='". $username ."'; ");
-				$matchingnames = 0;
-				foreach($result as $matchingnames){
-					$matchingnames++;
-				}
-				if($matchingnames == 0){
-					$conn->query("INSERT INTO user (username, password) VALUES ('". $username ."', '". $password ."'); ");
-					$_SESSION['username'] = $username;
-				}
-				echo $_SESSION['username'];
-				
-			}
-		  ?>
-		  
-		  
-
-          <div class="mastfoot">
+		    <div class="mastfoot">
             <div class="inner">
               <p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+			  
             </div>
+			
+			
           </div>
-
+	  
         </div>
 
       </div>
+<?php
+		
+		$sql = "SELECT * FROM user WHERE username='". $_SESSION['username'] ."';";
+		$result = $conn->query($sql);
+		while($row = mysqli_fetch_array($result)) {
+			$uid = $row['id'];	
+		}
+		
+		$sql = "SELECT * FROM Cards where uid='". $uid ."';";
+		
+		
+		
+		$result = $conn->query($sql);
 
+echo "<div class='container-fluid'>
+			<table class='table table-striped'>
+				<thead>
+					<tr>
+						<th>Card Name</th>
+						<th>Class</th>
+						<th>Image</th>
+					</tr>
+				</thead>";
+				
+while($row = mysqli_fetch_array($result)) {
+    echo "<tr>";
+		echo "<td><font color='black'>" . $row['name'] . "</td>";
+		echo "<td><font color='black'>" . $row['class'] . "</td>";
+		echo "<td><font color='black'>" . $row['card_image'] . "</td>";
+		echo "</tr>";
+}
+echo "</tbody></table></div>";
+	  ?>
+	  
     </div>
 
     <!-- Bootstrap core JavaScript

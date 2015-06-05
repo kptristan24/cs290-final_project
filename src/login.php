@@ -81,16 +81,16 @@
         <div class="cover-container">
 
           <div class="inner cover">
-            <h1 class="cover-heading">Create a new Profile!</h1>
-            <p class="lead">It seems you haven't made a profile yet! Fill out the form below to make a new user.</p>
+            <h1 class="cover-heading">Login to Hearthstone Collection App</h1>
+            <p class="lead">Fill out the form below to login and access your collection!</p>
             <p class="lead">
 			<script type="text/javascript" src="../../../libraries/jquery-2.1.4.min.js"></script>
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-              <form method="POST" action="createprofile.php">
+              <form method="POST" action="login.php">
 				<div class="input-group">
 					<span class="input-group-addon" id="basic-addon1">User Name</span>
 					<script type="text/javascript" src="../js/check_user.js"></script>
-					<input type="text" onChange="doShit();" id="username "name="username" class="form-control" placeholder="Username" aria-describedby="basic-addon1"><br>
+					<input type="text" name="username" class="form-control" placeholder="Username" aria-describedby="basic-addon1"><br>
 					<div id="status"></div>
 				</div>
 				<br><br>
@@ -106,23 +106,26 @@
 		  
 		  <?php
 			if(isset($_POST['username'])){
-				echo $_POST['username'];
 				
 				$username = $_POST['username'];
 				$password = $_POST['password'];
 				
 				//Double check if names in DB
-				$result = $conn->query("SELECT username FROM user WHERE username='". $username ."'; ");
-				$matchingnames = 0;
-				foreach($result as $matchingnames){
-					$matchingnames++;
+				$result = $conn->query("SELECT * FROM user WHERE username='". $username ."'; ");
+				$count = 0;
+				while($row = mysqli_fetch_array($result)) {
+					if($row['username'] == $username && $row['password'] == $password){
+						$_SESSION['username'] = $username;
+						echo 'Successfully logged in!';	
+						$count = 1;
+					}
+					else{
+						echo 'We messed something up... Try again!';
+					}
 				}
-				if($matchingnames == 0){
-					$conn->query("INSERT INTO user (username, password) VALUES ('". $username ."', '". $password ."'); ");
-					$_SESSION['username'] = $username;
+				if($count == 0){
+					echo 'User name or password not found! Try again.';
 				}
-				echo $_SESSION['username'];
-				
 			}
 		  ?>
 		  
