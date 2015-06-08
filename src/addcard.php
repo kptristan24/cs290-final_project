@@ -87,7 +87,7 @@
             <p class="lead">
 			<script type="text/javascript" src="../../../libraries/jquery-2.1.4.min.js"></script>
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-              <form method="POST" action="addcard.php">
+              <form method="POST" action="addcard.php" enctype="multipart/form-data">
 				<div class="input-group">
 					<span class="input-group-addon" id="basic-addon1">Card Name</span>
 					<input type="text" name="card_name" class="form-control" placeholder="Fireball, Armorsmith...." aria-describedby="basic-addon1"><br>
@@ -98,10 +98,9 @@
 					<input type="text" name="class" class="form-control" placeholder="Mage, Warrior, Hunter..." aria-describedby="basic-addon1"><br>
 				</div>
 				<br><br>
-				<div class="input-group">
-					<span class="input-group-addon" id="basic-addon1">Card Image</span>
-					<input type="text" id="username "name="image" class="form-control" placeholder="Username" aria-describedby="basic-addon1"><br>
-				</div>
+				<span class="btn btn-default btn-file">
+					Upload Card Image<input type="file" name="filename">
+				</span>
 				<br><br>
 				<button type="submit" class="btn btn-default">Submit</button>
 			</form>
@@ -119,7 +118,7 @@
 			if(isset($_POST['card_name'])){
 				$name = $_POST['card_name'];
 				$class = $_POST['class'];
-				$image = $_POST['image'];
+				$image = $HTTP_POST_FILES['filename']['name'];
 				
 				$sql = "SELECT * FROM user WHERE username='". $_SESSION['username'] ."';";
 				$result = $conn->query($sql);
@@ -129,6 +128,8 @@
 				
 				$sql = "INSERT INTO Cards (uid, name, class, card_image) VALUES ('". $uid ."', '". $name ."', '". $class ."', '". $image ."')";
 				$conn->query($sql);
+				$folder = "uploading/";
+				move_uploaded_file($HTTP_POST_FILES['filename']['tmp_name'], $folder.$HTTP_POST_FILES['filename']['name']);
 				
 				echo 'Successfully Added teh card!';
 			}

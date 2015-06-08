@@ -82,7 +82,7 @@
 
           <div class="inner cover">
             <h1 class="cover-heading">Your collection</h1>
-            <p class="lead">This is a list of the cards you've added. Neato!</p>
+            <p class="lead">This is a list of the cards you've added. Neato! Click on the image name to see it.</p>
 		  
 		    <div class="mastfoot">
             <div class="inner">
@@ -106,8 +106,6 @@
 		
 		$sql = "SELECT * FROM Cards where uid='". $uid ."';";
 		
-		
-		
 		$result = $conn->query($sql);
 
 echo "<div class='container-fluid'>
@@ -119,13 +117,23 @@ echo "<div class='container-fluid'>
 						<th>Image</th>
 					</tr>
 				</thead>";
-				
+$count = 0;
 while($row = mysqli_fetch_array($result)) {
-    echo "<tr>";
-		echo "<td><font color='black'>" . $row['name'] . "</td>";
-		echo "<td><font color='black'>" . $row['class'] . "</td>";
-		echo "<td><font color='black'>" . $row['card_image'] . "</td>";
+	$count++;
+	echo "<tr>";
+	if(!($count % 2 == 0)){
+			echo "<td><font color='black'>" . $row['name'] . "</td>";
+			echo "<td><font color='black'>" . $row['class'] . "</td>";
+			echo "<td><font color='black'><a href='showimg.php?file=". $row['card_image'] ."'>" . $row['card_image'] . "</td>";
+			echo "</tr>";
+	}
+	else{
+		$url = "uploading/". $row['card_image'];
+		echo "<td><font color='white'>" . $row['name'] . "</td>";
+		echo "<td><font color='white'>" . $row['class'] . "</td>";
+		echo "<td><font color='white'><a href='". $url ."'>" . $row['card_image'] . "</a></td>";
 		echo "</tr>";
+	}
 }
 echo "</tbody></table></div>";
 	  ?>
