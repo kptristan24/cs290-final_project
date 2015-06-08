@@ -1,4 +1,5 @@
 <?php include 'dbconn.php'; ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -51,9 +52,8 @@
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">My Collection <span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Add</a></li>
+                    <li><a href="addcard.php">Add</a></li>
                     <li><a href="viewcollection.php">View</a></li>
-                    <li><a href="#">Something else here</a></li>
                   </ul>
                 </li>
               </ul>
@@ -62,7 +62,7 @@
 				if(!isset($_SESSION['username'])){
 					echo '<li><a href="createprofile.php">Create Profile</a></li>';
 				}else{
-					echo '<li><a href="reddit.com">'. $_SESSION['username'] .'</a></li>';
+					echo '<li><a href="">'. $_SESSION['username'] .'</a></li>';
 				}
 				
 			?>
@@ -90,9 +90,9 @@
 				<div class="input-group">
 					<span class="input-group-addon" id="basic-addon1">User Name</span>
 					<script type="text/javascript" src="../js/check_user.js"></script>
-					<input type="text" onChange="doShit();" id="username "name="username" class="form-control" placeholder="Username" aria-describedby="basic-addon1"><br>
-					<div id="status"></div>
+					<input type="text" onChange="doShit();" id="username" name="username" class="form-control" placeholder="Username" aria-describedby="basic-addon1"><br>
 				</div>
+				<div id="status"></div>
 				<br><br>
 				<div class="input-group">
 					<span class="input-group-addon" id="basic-addon1">Password</span>
@@ -120,8 +120,9 @@
 				if($matchingnames == 0){
 					$conn->query("INSERT INTO user (username, password) VALUES ('". $username ."', '". $password ."'); ");
 					$_SESSION['username'] = $username;
+					echo 'Successfully created and logged in!';
 				}
-				echo $_SESSION['username'];
+				
 				
 			}
 		  ?>

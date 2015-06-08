@@ -52,9 +52,8 @@
                 <li class="dropdown">
                   <a href="createprofile.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">My Collection <span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Add</a></li>
-                    <li><a href="#">View</a></li>
-                    <li><a href="#">Something else here</a></li>
+                    <li><a href="addcard.php">Add</a></li>
+                    <li><a href="viewcollection.php">View</a></li>
                   </ul>
                 </li>
               </ul>
@@ -139,7 +138,6 @@
           <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
           <h2>You're gonna love my sweet app</h2>
           <p>I guarentee this app is dope. Also for all legality, I do not own Blizzard's Hearthstone, so all things on this site are for personal use, no profit or redistribution. Thanks Blizz.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
       
 

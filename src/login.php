@@ -62,7 +62,7 @@
 				if(!isset($_SESSION['username'])){
 					echo '<li><a href="createprofile.php">Create Profile</a></li>';
 				}else{
-					echo '<li><a href="reddit.com">'. $_SESSION['username'] .'</a></li>';
+					echo '<li><a href="#">'. $_SESSION['username'] .'</a></li>';
 				}
 				
 			?>
@@ -120,7 +120,7 @@
 						$count = 1;
 					}
 					else{
-						echo 'We messed something up... Try again!';
+						echo 'We messed something up... Try again!<br>';
 					}
 				}
 				if($count == 0){

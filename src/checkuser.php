@@ -1,7 +1,6 @@
 <?php
 
-echo 'shitfuck';
-echo ''. $_POST["username"]. '';
+//echo ''. $_POST["username"]. '';
 	
 	$conn = new mysqli("oniddb.cws.oregonstate.edu", "harit-db", "Z40YK7UbNXNGDFMx", "harit-db");
 if ($conn->connect_errno) {
@@ -12,21 +11,22 @@ if ($conn->connect_errno) {
 
 if(isset($_POST['username'])){
 	$username = $_POST['username'];
-	echo '<br>|<br>';
+
 	echo $username;
-	echo '<br>|<br>';
+	
+	$sql = "SELECT * FROM user WHERE username='". $username ."';";
+
 	if($username != ''){
-		$result = $conn->query("SELECT * FROM user WHERE username='". $username ."';");
+		$result = $conn->query($sql);
+		//echo '<br>'. $sql;
 		$count = 0;
-		foreach($result as $rows){
-			$count++;
-		}
-		echo $count;
+		$count = $result->num_rows;
+		//echo $count;
 		if($count == 0){
-			echo "Username Availble";
+			echo "<br>Username Availble";
 		}
 		else{
-			echo "Sorry, Name is taken.";
+			echo "<br>Sorry, Name is taken.";
 		}
 	}
 }

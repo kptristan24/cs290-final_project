@@ -1,4 +1,9 @@
 <?php include 'dbconn.php'; ?>
+<?php if(!isset($_SESSION['username'])){
+		echo '<script> window.location="createprofile.php"; </script>'; 
+	
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -51,9 +56,8 @@
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">My Collection <span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Add</a></li>
+                    <li><a href="addcard.php">Add</a></li>
                     <li><a href="viewcollection.php">View</a></li>
-                    <li><a href="#">Something else here</a></li>
                   </ul>
                 </li>
               </ul>
